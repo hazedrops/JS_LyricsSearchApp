@@ -9,8 +9,6 @@ const apiURL = 'https://api.lyrics.ovh'
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest/${term}`); // The fetch call returns promis, so put await in front of fetch
   const data = await res.json();
-
-  console.log(data);
   
   showData(data);
 }
@@ -24,19 +22,16 @@ function showData(data) {
         .map(
           (song) => `
           <li>
-            <img src="${song.album.cover}" />
-            <span><strong>${song.artist.name}</strong> - ${song.title}</span>            
+            <span><strong>${song.artist.name}</strong> - ${song.title}</span>
             <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
           </li>
         `
         )
         .join('')}
     </ul>
-  `
+  `;
 
-  // ***** <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Play Sample</button>
-
-  if (data.prev || data.next) {
+  if(data.prev || data.next) {
     // If there's a prev/next page, then put the button into the innerHTML, or leave it blank
     // pass data.prev(url from the data > "prev" attribute) / data.next as a parameter of getMoreSongs() when buttons are clicked
     more.innerHTML = `    
@@ -51,7 +46,7 @@ function showData(data) {
           : ''
       }
     `
-  } else more.innerHTML = ''
+  } else more.innerHTML = '';
 }
 
 // Get prev/next songs
